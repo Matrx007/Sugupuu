@@ -4,6 +4,7 @@ import com.ttg.sugupuu.Person;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 public class Comparative {
 
@@ -40,8 +41,8 @@ public class Comparative {
         return persons;
     }
 
-    public static ArrayList<Person> getSiblings(Person person, ArrayList<Person> roots) {
-        ArrayList<Person> siblings = new ArrayList<>();
+    public static HashSet<Person> getSiblings(Person person, ArrayList<Person> roots) {
+        HashSet<Person> siblings = new HashSet<>();
         findParents(person, roots).forEach(parent -> {
             siblings.addAll(parent.children);
             siblings.remove(person);
