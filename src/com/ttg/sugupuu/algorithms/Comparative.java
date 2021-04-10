@@ -57,9 +57,9 @@ public class Comparative {
         return siblings;
     }
 
-    public static ArrayList<ArrayList<Person>> getGrandparents(Person person, ArrayList<Person> roots) {
-        ArrayList<ArrayList<Person>> grandparents = new ArrayList<>();
-        findParents(person, roots).forEach(parent -> grandparents.add(findParents(parent, roots)));
+    public static ArrayList<Person> getGrandparents(Person person, ArrayList<Person> roots) {
+        ArrayList<Person> grandparents = new ArrayList<>();
+        findParents(person, roots).forEach(parent -> grandparents.addAll(findParents(parent, roots)));
         return grandparents;
     }
 
