@@ -11,7 +11,7 @@ public class Comparative {
         HashSet<Person> parents = new HashSet<>();
         roots.forEach(person -> {
             if (!person.children.isEmpty()) {
-                if (person == child) parents.add(person);
+                if (person.children.contains(child)) parents.add(person);
                 else parents.addAll(findParents(child, person.children));
             }
         });
