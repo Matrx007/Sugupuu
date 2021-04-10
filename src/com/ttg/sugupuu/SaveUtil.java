@@ -15,7 +15,7 @@ public class SaveUtil {
     public static void dataToFile(Serializable data)  {
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         jfc.setDialogTitle("Save Family tree");
-        FileNameExtensionFilter f = new FileNameExtensionFilter("Family tree file", "familytree");
+        FileNameExtensionFilter f = new FileNameExtensionFilter("familytree", "familytree");
         jfc.addChoosableFileFilter(f);
         jfc.setAcceptAllFileFilterUsed(true);
         int rv = jfc.showSaveDialog(null);
