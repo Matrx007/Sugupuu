@@ -1,6 +1,7 @@
 package com.ttg.sugupuu;
 
 import com.ttg.sugupuu.gui.DrawTree;
+import com.ttg.sugupuu.gui.InfoDialog;
 import com.ttg.sugupuu.gui.PersonNode;
 import com.ydgames.mxe.Game;
 import com.ydgames.mxe.GameContainer;
@@ -17,12 +18,14 @@ public class GUI extends GameContainer {
 
     // DATA
     DrawTree drawTree;
+    InfoDialog infoDialog;
 
     // RENDERING
     public static float cameraX, cameraY;
 
     // PROGRAM FLOW
     public static boolean multiSelecting = false;
+    public static boolean clickedOnNode = false;
     public static boolean canSelect = true;
     public static PersonNode selected = null;
     public static ArrayList<PersonNode> multiSelected = new ArrayList<>();
@@ -32,7 +35,10 @@ public class GUI extends GameContainer {
     public void setup() {
         game = getGame();
 
-        drawTree = new DrawTree(RandomTree.root);
+        RelationTree relationTree = new RelationTree();
+        relationTree.rootNodes.add(RandomTree.root);
+        drawTree = new DrawTree(relationTree);
+        infoDialog = new InfoDialog();
     }
 
     float dragStartCameraX, dragStartCameraY;
@@ -41,6 +47,8 @@ public class GUI extends GameContainer {
 
     @Override
     public void update(double v) {
+        clickedOnNode = false;
+
         if(gui.game.input.isKey(PConstants.SHIFT) ||
                 gui.game.input.isKeyDown(PConstants.SHIFT)) {
             multiSelecting = true;
@@ -50,7 +58,12 @@ public class GUI extends GameContainer {
             canSelect = true;
         }
 
-        if(game.input.isButtonDown(PConstants.LEFT)) {
+        drawTree.update();
+        infoDialog.update();
+
+        if(game.input.isButtonDown(PConstants.LEFT) && !clickedOnNode) {
+            selected = null;
+
             dragging = true;
 
             dragStartCameraX = cameraX;
@@ -68,8 +81,6 @@ public class GUI extends GameContainer {
             cameraX = dragStartCameraX + (gui.game.mouseX - dragStartMouseX);
             cameraY = dragStartCameraY + (gui.game.mouseY - dragStartMouseY);
         }
-
-        drawTree.update();
     }
 
     @Override
@@ -78,12 +89,26 @@ public class GUI extends GameContainer {
 
     @Override
     public void render() {
+
         gui.game.background(255);
 
         gui.game.pushMatrix();
         gui.game.translate(cameraX, cameraY);
         drawTree.render();
         gui.game.popMatrix();
+
+        infoDialog.render();
+
+        float currentY = game.pixelHeight;
+        gui.game.textAlign(PConstants.RIGHT, PConstants.BOTTOM);
+        gui.game.text("S to save", game.pixelWidth - 8, currentY);
+        currentY -= 32;
+        gui.game.text("L to load", game.pixelWidth - 8, currentY);
+        currentY -= 32;
+        gui.game.text("N to create a new node", game.pixelWidth - 8, currentY);
+        currentY -= 32;
+        //gui.game.text("D to delete a node", game.pixelWidth - 8, currentY);
+        //currentY -= 32;
     }
 
 

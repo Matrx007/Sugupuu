@@ -1,5 +1,6 @@
 package com.ttg.sugupuu.gui;
 
+import com.ttg.sugupuu.GUI;
 import com.ttg.sugupuu.Person;
 import processing.core.PConstants;
 
@@ -19,10 +20,22 @@ public class PersonNode {
         this.y = y;
     }
 
+    float dragStartOffsetX, dragStartOffsetY;
+    float dragStartMouseX, dragStartMouseY;
+    boolean dragging;
+
     public void update() {
-        if(gui.game.input.isButtonDown(PConstants.LEFT)) {
+        if(gui.game.input.isButtonDown(PConstants.LEFT) && !clickedOnNode) {
             if (gui.game.mouseX-cameraX > x - NODE_WIDTH / 2 && gui.game.mouseX-cameraX < x + NODE_WIDTH / 2 &&
                     gui.game.mouseY-cameraY > y - NODE_WIDTH / 2 && gui.game.mouseY-cameraY < y + NODE_HEIGHT / 2) {
+
+                dragging = true;
+                dragStartOffsetX = x;
+                dragStartOffsetY = y;
+                dragStartMouseX = (gui.game.mouseX + cameraX);
+                dragStartMouseY = (gui.game.mouseY + cameraY);
+
+                clickedOnNode = true;
                 System.out.println("mouse-over");
                 if(multiSelecting) {
                     multiSelected.add(this);
@@ -37,6 +50,15 @@ public class PersonNode {
                     System.out.println("selected");
                 }
             }
+        }
+
+        if(dragging) {
+            if(!gui.game.input.isButton(PConstants.LEFT)) {
+                dragging = false;
+            }
+
+            x = dragStartOffsetX + ((gui.game.mouseX + cameraX) - dragStartMouseX);
+            y = dragStartOffsetY + ((gui.game.mouseY + cameraY) - dragStartMouseY);
         }
     }
 
@@ -56,6 +78,9 @@ public class PersonNode {
         if(person.name != null) {
             gui.game.noStroke();
             gui.game.fill(0);
+
+            gui.game.textAlign(PConstants.CENTER, PConstants.CENTER);
+            gui.game.textSize(16f);
             gui.game.text(person.name, x, y);
         }
     }

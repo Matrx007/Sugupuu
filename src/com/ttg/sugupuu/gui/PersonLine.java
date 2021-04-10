@@ -19,6 +19,6 @@ public class PersonLine {
         gui.game.strokeWeight(2);
 
         gui.game.line(from.x, from.y - DrawTree.NODE_HEIGHT/2,
-                to.x, to.y - DrawTree.NODE_HEIGHT/2);
+                to.x, to.y);
     }
 }
