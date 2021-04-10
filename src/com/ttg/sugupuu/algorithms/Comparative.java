@@ -3,13 +3,12 @@ package com.ttg.sugupuu.algorithms;
 import com.ttg.sugupuu.Person;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 
 public class Comparative {
 
-    public static ArrayList<Person> findParents(Person child, ArrayList<Person> roots) {
-        ArrayList<Person> parents = new ArrayList<>();
+    public static HashSet<Person> findParents(Person child, ArrayList<Person> roots) {
+        HashSet<Person> parents = new HashSet<>();
         roots.forEach(person -> {
             if (!person.children.isEmpty()) {
                 if (person == child) parents.add(person);
@@ -19,8 +18,8 @@ public class Comparative {
         return parents;
     }
 
-    public static ArrayList<Person> nameStartsWith(String name, ArrayList<Person> roots) {
-        ArrayList<Person> persons = new ArrayList<>();
+    public static HashSet<Person> nameStartsWith(String name, ArrayList<Person> roots) {
+        HashSet<Person> persons = new HashSet<>();
         roots.forEach(person -> {
             if (!person.children.isEmpty()) {
                 if (person.name.startsWith(name)) persons.add(person);
@@ -30,8 +29,8 @@ public class Comparative {
         return persons;
     }
 
-    public static ArrayList<Person> nameEndsWith(String name, ArrayList<Person> roots) {
-        ArrayList<Person> persons = new ArrayList<>();
+    public static HashSet<Person> nameEndsWith(String name, ArrayList<Person> roots) {
+        HashSet<Person> persons = new HashSet<>();
         roots.forEach(person -> {
             if (!person.children.isEmpty()) {
                 if (person.name.endsWith(name)) persons.add(person);
@@ -50,16 +49,16 @@ public class Comparative {
         return siblings;
     }
 
-    public static ArrayList<Person> getSiblings(Person person, ArrayList<Person> roots, boolean isMale) {
-        ArrayList<Person> siblings = new ArrayList<>();
+    public static HashSet<Person> getSiblings(Person person, ArrayList<Person> roots, boolean isMale) {
+        HashSet<Person> siblings = new HashSet<>();
         getSiblings(person, roots).forEach(sibling -> {
             if (sibling.isMale == isMale) siblings.add(sibling);
         });
         return siblings;
     }
 
-    public static ArrayList<Person> getGrandparents(Person person, ArrayList<Person> roots) {
-        ArrayList<Person> grandparents = new ArrayList<>();
+    public static HashSet<Person> getGrandparents(Person person, ArrayList<Person> roots) {
+        HashSet<Person> grandparents = new HashSet<>();
         findParents(person, roots).forEach(parent -> grandparents.addAll(findParents(parent, roots)));
         return grandparents;
     }
