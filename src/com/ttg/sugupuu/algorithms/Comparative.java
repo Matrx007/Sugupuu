@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Comparative {
 
-    public ArrayList<Person> findParents(Person child, ArrayList<Person> roots) {
+    public static ArrayList<Person> findParents(Person child, ArrayList<Person> roots) {
         ArrayList<Person> parents = new ArrayList<>();
         roots.forEach(person -> {
             if (!person.children.isEmpty()) {
@@ -17,7 +17,7 @@ public class Comparative {
         return parents;
     }
 
-    public ArrayList<Person> nameStartsWith(String name, ArrayList<Person> roots) {
+    public static ArrayList<Person> nameStartsWith(String name, ArrayList<Person> roots) {
         ArrayList<Person> persons = new ArrayList<>();
         roots.forEach(person -> {
             if (!person.children.isEmpty()) {
@@ -28,7 +28,7 @@ public class Comparative {
         return persons;
     }
 
-    public ArrayList<Person> nameEndsWith(String name, ArrayList<Person> roots) {
+    public static ArrayList<Person> nameEndsWith(String name, ArrayList<Person> roots) {
         ArrayList<Person> persons = new ArrayList<>();
         roots.forEach(person -> {
             if (!person.children.isEmpty()) {
@@ -39,7 +39,7 @@ public class Comparative {
         return persons;
     }
 
-    public ArrayList<Person> getSiblings(Person person, ArrayList<Person> roots) {
+    public static ArrayList<Person> getSiblings(Person person, ArrayList<Person> roots) {
         ArrayList<Person> siblings = new ArrayList<>();
         findParents(person, roots).forEach(parent -> {
             siblings.addAll(parent.children);
