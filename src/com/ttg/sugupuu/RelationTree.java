@@ -2,6 +2,6 @@ package com.ttg.sugupuu;
 
 import java.util.ArrayList;
 
-public class RelationTree {
+public class RelationTree implements java.io.Serializable {
     public ArrayList<Person> rootNodes;
 }
